@@ -12,7 +12,7 @@ using QuizzApp.Areas.Identity.Data;
 namespace QuizzApp.Migrations
 {
     [DbContext(typeof(ApplicationDBcontext))]
-    [Migration("20240203023732_Initial")]
+    [Migration("20240204020714_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -235,6 +235,111 @@ namespace QuizzApp.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("QuizzApp.Models.Pergunta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("QuizzesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Respostas")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Texto")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizzesId");
+
+                    b.ToTable("Pergunta");
+                });
+
+            modelBuilder.Entity("QuizzApp.Models.Quizzes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("iduser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("temaid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("topicoid")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("temaid");
+
+                    b.HasIndex("topicoid");
+
+                    b.ToTable("Quizzes");
+                });
+
+            modelBuilder.Entity("QuizzApp.Models.Tema", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("nmtema")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tema");
+                });
+
+            modelBuilder.Entity("QuizzApp.Models.Topico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("nmtopico")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("temaid")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("temaid");
+
+                    b.ToTable("Topico");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -284,6 +389,53 @@ namespace QuizzApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("QuizzApp.Models.Pergunta", b =>
+                {
+                    b.HasOne("QuizzApp.Models.Quizzes", null)
+                        .WithMany("Perguntas")
+                        .HasForeignKey("QuizzesId");
+                });
+
+            modelBuilder.Entity("QuizzApp.Models.Quizzes", b =>
+                {
+                    b.HasOne("QuizzApp.Models.Tema", "tema")
+                        .WithMany()
+                        .HasForeignKey("temaid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuizzApp.Models.Topico", "topico")
+                        .WithMany()
+                        .HasForeignKey("topicoid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("tema");
+
+                    b.Navigation("topico");
+                });
+
+            modelBuilder.Entity("QuizzApp.Models.Topico", b =>
+                {
+                    b.HasOne("QuizzApp.Models.Tema", "tema")
+                        .WithMany("Topicos")
+                        .HasForeignKey("temaid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("tema");
+                });
+
+            modelBuilder.Entity("QuizzApp.Models.Quizzes", b =>
+                {
+                    b.Navigation("Perguntas");
+                });
+
+            modelBuilder.Entity("QuizzApp.Models.Tema", b =>
+                {
+                    b.Navigation("Topicos");
                 });
 #pragma warning restore 612, 618
         }

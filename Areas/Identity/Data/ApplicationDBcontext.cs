@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QuizzApp.Areas.Identity.Data;
+using QuizzApp.Models;
 
 namespace QuizzApp.Areas.Identity.Data;
 
@@ -20,6 +21,8 @@ public class ApplicationDBcontext : IdentityDbContext<ApplicationUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
     }
+
+public DbSet<QuizzApp.Models.Quizzes> Quizzes { get; set; } = default!;
 }
 
 public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>

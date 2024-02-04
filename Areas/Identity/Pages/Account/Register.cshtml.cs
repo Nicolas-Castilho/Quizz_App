@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
@@ -75,29 +76,46 @@ namespace QuizzApp.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
+            [Required(ErrorMessage = "O e-mail é obrigatório.")]
+            [EmailAddress(ErrorMessage = "Insira um endereço de e-mail válido.")]
+            [StringLength(50, ErrorMessage = "O e-mail não pode exceder {1} caracteres.")]
+            [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Formato de e-mail inválido.")]
             public string Email { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "A senha é obrigatória.")]
+            [StringLength(50, MinimumLength = 8, ErrorMessage = "A senha deve ter pelo menos {2} caracteres.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$", ErrorMessage = "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.")]
+            [Display(Name = "Senha")]
             public string Password { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            [Required(ErrorMessage = "A confirmação de senha é obrigatória.")]
+            [StringLength(100, MinimumLength = 8, ErrorMessage = "A senha deve ter pelo menos {2} caracteres.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$", ErrorMessage = "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.")]
+            [Compare("Password", ErrorMessage = "A senha e a confirmação não coincidem.")]
+            [Display(Name = "Repita a senha")]
             public string ConfirmPassword { get; set; }
+
+            [Required(ErrorMessage = "O campo Nome é obrigatório.")]
+            [StringLength(20, ErrorMessage = "O campo Nome não pode ter mais de 20 caracteres.")]
+            [RegularExpression(@"^[a-zA-ZÀ-ú\s]*$", ErrorMessage = "O campo Nome deve conter apenas letras.")]
+            [Display(Name = "Nome")]
+            public string FirstName { get; set; }
+
+            [Required(ErrorMessage = "O campo Sobrenome é obrigatório.")]
+            [StringLength(50, ErrorMessage = "O campo Sobrenome não pode ter mais de 50 caracteres.")]
+            [RegularExpression(@"^[a-zA-ZÀ-ú\s]*$", ErrorMessage = "O campo Sobrenome deve conter apenas letras.")]
+            [Display(Name = "Sobrenome")]
+            public string LastName { get; set; }
         }
 
 
@@ -114,6 +132,9 @@ namespace QuizzApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -132,7 +153,9 @@ namespace QuizzApp.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await _userManager.AddClaimAsync(user, new Claim("FirstName", user.FirstName));
+                    await _userManager.AddClaimAsync(user, new Claim("LastName", user.LastName));
+                    await _emailSender.SendEmailAsync(Input.Email, "Valide sua conta",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
