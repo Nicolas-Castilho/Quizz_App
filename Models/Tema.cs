@@ -7,7 +7,7 @@ namespace QuizzApp.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        [StringLength(20)]
+        [StringLength(30)]
         public string nmtema { get; set; }
         public ICollection<Topico> Topicos { get; set; }
     }

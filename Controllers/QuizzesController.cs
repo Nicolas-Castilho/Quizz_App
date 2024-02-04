@@ -34,23 +34,23 @@ namespace QuizzApp.Controllers
                 return NotFound();
             }
 
-            var quizzes = await _context.Quizzes
+            var quizz = await _context.Quizzes
                 .Include(q => q.tema)
                 .Include(q => q.topico)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (quizzes == null)
+            if (quizz == null)
             {
                 return NotFound();
             }
 
-            return View(quizzes);
+            return View(quizz);
         }
 
         // GET: Quizzes/Create
         public IActionResult Create()
         {
             ViewData["temaid"] = new SelectList(_context.Set<Tema>(), "Id", "nmtema");
-            ViewData["topicoid"] = new SelectList(_context.Set<Topico>(), "Id", "Id");
+            ViewData["topicoid"] = new SelectList(_context.Set<Topico>(), "Id", "nmtopico");
             return View();
         }
 
@@ -59,17 +59,17 @@ namespace QuizzApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Descricao,iduser,temaid,topicoid")] Quizzes quizzes)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,Descricao,iduser,temaid,topicoid")] Quizz quizz)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(quizzes);
+                _context.Add(quizz);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["temaid"] = new SelectList(_context.Set<Tema>(), "Id", "nmtema", quizzes.temaid);
-            ViewData["topicoid"] = new SelectList(_context.Set<Topico>(), "Id", "Id", quizzes.topicoid);
-            return View(quizzes);
+            ViewData["temaid"] = new SelectList(_context.Set<Tema>(), "Id", "nmtema", quizz.temaid);
+            ViewData["topicoid"] = new SelectList(_context.Set<Topico>(), "Id", "nmtopico", quizz.topicoid);
+            return View(quizz);
         }
 
         // GET: Quizzes/Edit/5
@@ -80,14 +80,14 @@ namespace QuizzApp.Controllers
                 return NotFound();
             }
 
-            var quizzes = await _context.Quizzes.FindAsync(id);
-            if (quizzes == null)
+            var quizz = await _context.Quizzes.FindAsync(id);
+            if (quizz == null)
             {
                 return NotFound();
             }
-            ViewData["temaid"] = new SelectList(_context.Set<Tema>(), "Id", "nmtema", quizzes.temaid);
-            ViewData["topicoid"] = new SelectList(_context.Set<Topico>(), "Id", "Id", quizzes.topicoid);
-            return View(quizzes);
+            ViewData["temaid"] = new SelectList(_context.Set<Tema>(), "Id", "nmtema", quizz.temaid);
+            ViewData["topicoid"] = new SelectList(_context.Set<Topico>(), "Id", "nmtopico", quizz.topicoid);
+            return View(quizz);
         }
 
         // POST: Quizzes/Edit/5
@@ -95,9 +95,9 @@ namespace QuizzApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Descricao,iduser,temaid,topicoid")] Quizzes quizzes)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Descricao,iduser,temaid,topicoid")] Quizz quizz)
         {
-            if (id != quizzes.Id)
+            if (id != quizz.Id)
             {
                 return NotFound();
             }
@@ -106,12 +106,12 @@ namespace QuizzApp.Controllers
             {
                 try
                 {
-                    _context.Update(quizzes);
+                    _context.Update(quizz);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!QuizzesExists(quizzes.Id))
+                    if (!QuizzExists(quizz.Id))
                     {
                         return NotFound();
                     }
@@ -122,9 +122,9 @@ namespace QuizzApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["temaid"] = new SelectList(_context.Set<Tema>(), "Id", "nmtema", quizzes.temaid);
-            ViewData["topicoid"] = new SelectList(_context.Set<Topico>(), "Id", "Id", quizzes.topicoid);
-            return View(quizzes);
+            ViewData["temaid"] = new SelectList(_context.Set<Tema>(), "Id", "nmtema", quizz.temaid);
+            ViewData["topicoid"] = new SelectList(_context.Set<Topico>(), "Id", "nmtopico", quizz.topicoid);
+            return View(quizz);
         }
 
         // GET: Quizzes/Delete/5
@@ -135,16 +135,16 @@ namespace QuizzApp.Controllers
                 return NotFound();
             }
 
-            var quizzes = await _context.Quizzes
+            var quizz = await _context.Quizzes
                 .Include(q => q.tema)
                 .Include(q => q.topico)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (quizzes == null)
+            if (quizz == null)
             {
                 return NotFound();
             }
 
-            return View(quizzes);
+            return View(quizz);
         }
 
         // POST: Quizzes/Delete/5
@@ -152,17 +152,17 @@ namespace QuizzApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var quizzes = await _context.Quizzes.FindAsync(id);
-            if (quizzes != null)
+            var quizz = await _context.Quizzes.FindAsync(id);
+            if (quizz != null)
             {
-                _context.Quizzes.Remove(quizzes);
+                _context.Quizzes.Remove(quizz);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool QuizzesExists(int id)
+        private bool QuizzExists(int id)
         {
             return _context.Quizzes.Any(e => e.Id == id);
         }

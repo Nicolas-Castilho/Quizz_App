@@ -9,7 +9,7 @@ namespace QuizzApp.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        [StringLength(20)]
+        [StringLength(45)]
         public string nmtopico { get; set; }
         [ForeignKey("temaid")]
         public int temaid { get; set; }

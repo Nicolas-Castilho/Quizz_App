@@ -2,7 +2,7 @@
 
 namespace QuizzApp.Models
 {
-    public class Quizzes
+    public class Quizz
     {
         [Key]
         public int Id { get; set; }

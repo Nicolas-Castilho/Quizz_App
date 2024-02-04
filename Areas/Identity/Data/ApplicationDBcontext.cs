@@ -22,7 +22,7 @@ public class ApplicationDBcontext : IdentityDbContext<ApplicationUser>
         // Add your customizations after calling base.OnModelCreating(builder);
     }
 
-public DbSet<QuizzApp.Models.Quizzes> Quizzes { get; set; } = default!;
+public DbSet<QuizzApp.Models.Quizz> Quizzes { get; set; } = default!;
 }
 
 public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>

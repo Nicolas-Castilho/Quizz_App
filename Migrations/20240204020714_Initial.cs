@@ -67,7 +67,7 @@ namespace QuizzApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nmtema = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    nmtema = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +80,7 @@ namespace QuizzApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nmtopico = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    nmtopico = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
                     temaid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
