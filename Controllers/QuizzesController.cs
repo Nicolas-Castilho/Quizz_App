@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using QuizzApp.Areas.Identity.Data;
 using QuizzApp.Models;
 
@@ -49,9 +50,14 @@ namespace QuizzApp.Controllers
         // GET: Quizzes/Create
         public IActionResult Create()
         {
-            ViewData["temaid"] = new SelectList(_context.Set<Tema>(), "Id", "nmtema");
-            ViewData["topicoid"] = new SelectList(_context.Set<Topico>(), "Id", "nmtopico");
+            ViewBag.Tema = new SelectList(_context.Set<Tema>(), "Id", "nmtema");
+            ViewBag.Topico = new SelectList(_context.Set<Topico>(), "Id", "nmtopico");
             return View();
+        }
+
+        public JsonResult GetTopicoByTemaId(int temaid)
+        {
+            return Json(_context.Topico.Where(q => q.temaid == temaid).ToList());
         }
 
         // POST: Quizzes/Create
