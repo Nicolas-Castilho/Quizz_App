@@ -42,7 +42,7 @@ namespace QuizzApp.Areas.Identity.Pages.Account.Manage
 
             if (!await _userManager.GetTwoFactorEnabledAsync(user))
             {
-                throw new InvalidOperationException($"Cannot disable 2FA for user as it's not currently enabled.");
+                throw new InvalidOperationException($"Não é possível desativar o 2FA para o usuário porque ele não está ativado no momento.");
             }
 
             return Page();
@@ -62,8 +62,8 @@ namespace QuizzApp.Areas.Identity.Pages.Account.Manage
                 throw new InvalidOperationException($"Unexpected error occurred disabling 2FA.");
             }
 
-            _logger.LogInformation("User with ID '{UserId}' has disabled 2fa.", _userManager.GetUserId(User));
-            StatusMessage = "2fa has been disabled. You can reenable 2fa when you setup an authenticator app";
+            _logger.LogInformation("O usuário com ID '{UserId}' desativou 2fa.", _userManager.GetUserId(User));
+            StatusMessage = "2fa foi desativado. Você pode reativar 2fa ao configurar um aplicativo autenticador";
             return RedirectToPage("./TwoFactorAuthentication");
         }
     }

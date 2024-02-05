@@ -55,7 +55,7 @@ namespace QuizzApp.Areas.Identity.Pages.Account
             [BindProperty]
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Recovery Code")]
+            [Display(Name = "Código de recuperação")]
             public string RecoveryCode { get; set; }
         }
 
@@ -65,7 +65,7 @@ namespace QuizzApp.Areas.Identity.Pages.Account
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"Não foi possível carregar o usuário com autenticação de dois fatores.");
             }
 
             ReturnUrl = returnUrl;
@@ -83,7 +83,7 @@ namespace QuizzApp.Areas.Identity.Pages.Account
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"Não foi possível carregar o usuário com autenticação de dois fatores.");
             }
 
             var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);

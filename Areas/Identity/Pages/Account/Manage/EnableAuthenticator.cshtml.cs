@@ -79,9 +79,9 @@ namespace QuizzApp.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(7, ErrorMessage = "O {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Text)]
-            [Display(Name = "Verification Code")]
+            [Display(Name = "Código de verificação")]
             public string Code { get; set; }
         }
 
@@ -120,16 +120,16 @@ namespace QuizzApp.Areas.Identity.Pages.Account.Manage
 
             if (!is2faTokenValid)
             {
-                ModelState.AddModelError("Input.Code", "Verification code is invalid.");
+                ModelState.AddModelError("Input.Code", "O código de verificação é inválido.");
                 await LoadSharedKeyAndQrCodeUriAsync(user);
                 return Page();
             }
 
             await _userManager.SetTwoFactorEnabledAsync(user, true);
             var userId = await _userManager.GetUserIdAsync(user);
-            _logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
+            _logger.LogInformation("O usuário com ID '{UserId}' ativou 2FA com um aplicativo autenticador.", userId);
 
-            StatusMessage = "Your authenticator app has been verified.";
+            StatusMessage = "Seu aplicativo autenticador foi verificado.";
 
             if (await _userManager.CountRecoveryCodesAsync(user) == 0)
             {

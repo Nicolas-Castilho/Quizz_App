@@ -57,7 +57,7 @@ namespace QuizzApp.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Número de telefone")]
             public string PhoneNumber { get; set; }
         }
 
@@ -112,7 +112,7 @@ namespace QuizzApp.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Seu perfil foi atualizado";
             return RedirectToPage();
         }
     }

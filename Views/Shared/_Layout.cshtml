@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿﻿@using Microsoft.AspNetCore.Identity
+@using QuizzApp.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,17 +28,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Quizzes" asp-action="Index">Meus Quizzes</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        { }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Entrar</a>
+                            </li>
+                        }
+                        @if (SignInManager.IsSignedIn(User)){
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Quizzes" asp-action="Index">Meus Quizzes</a>
+                            </li>
+
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
-        <partial name ="_Loginpartial" />
     </header>
     <div class="container">
         <main role="main" class="pb-3">

@@ -63,7 +63,7 @@ namespace QuizzApp.Areas.Identity.Pages.Account
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Thank you for confirming your email change.";
+            StatusMessage = "Obrigado por confirmar a alteração do seu e-mail.";
             return Page();
         }
     }

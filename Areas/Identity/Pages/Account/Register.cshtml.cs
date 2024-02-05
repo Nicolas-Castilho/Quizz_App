@@ -142,7 +142,7 @@ namespace QuizzApp.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("O usuário criou uma nova conta com senha.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -156,7 +156,7 @@ namespace QuizzApp.Areas.Identity.Pages.Account
                     await _userManager.AddClaimAsync(user, new Claim("FirstName", user.FirstName));
                     await _userManager.AddClaimAsync(user, new Claim("LastName", user.LastName));
                     await _emailSender.SendEmailAsync(Input.Email, "Valide sua conta",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"Por favor, confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
