@@ -12,8 +12,8 @@ using QuizzApp.Areas.Identity.Data;
 namespace QuizzApp.Migrations
 {
     [DbContext(typeof(ApplicationDBcontext))]
-    [Migration("20240204020714_Initial")]
-    partial class Initial
+    [Migration("20240209031308_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -243,26 +243,45 @@ namespace QuizzApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("QuizzesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Respostas")
+                    b.Property<string>("Resposta1")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Resposta2")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Resposta3")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Resposta4")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("RespostaCorreta")
+                        .HasColumnType("int");
 
                     b.Property<string>("Texto")
                         .IsRequired()
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
+                    b.Property<int>("quizzid")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("QuizzesId");
+                    b.HasIndex("quizzid");
 
                     b.ToTable("Pergunta");
                 });
 
-            modelBuilder.Entity("QuizzApp.Models.Quizzes", b =>
+            modelBuilder.Entity("QuizzApp.Models.Quizz", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -309,8 +328,8 @@ namespace QuizzApp.Migrations
 
                     b.Property<string>("nmtema")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -327,8 +346,8 @@ namespace QuizzApp.Migrations
 
                     b.Property<string>("nmtopico")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<int>("temaid")
                         .HasColumnType("int");
@@ -393,12 +412,16 @@ namespace QuizzApp.Migrations
 
             modelBuilder.Entity("QuizzApp.Models.Pergunta", b =>
                 {
-                    b.HasOne("QuizzApp.Models.Quizzes", null)
+                    b.HasOne("QuizzApp.Models.Quizz", "quizz")
                         .WithMany("Perguntas")
-                        .HasForeignKey("QuizzesId");
+                        .HasForeignKey("quizzid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("quizz");
                 });
 
-            modelBuilder.Entity("QuizzApp.Models.Quizzes", b =>
+            modelBuilder.Entity("QuizzApp.Models.Quizz", b =>
                 {
                     b.HasOne("QuizzApp.Models.Tema", "tema")
                         .WithMany()
@@ -428,7 +451,7 @@ namespace QuizzApp.Migrations
                     b.Navigation("tema");
                 });
 
-            modelBuilder.Entity("QuizzApp.Models.Quizzes", b =>
+            modelBuilder.Entity("QuizzApp.Models.Quizz", b =>
                 {
                     b.Navigation("Perguntas");
                 });

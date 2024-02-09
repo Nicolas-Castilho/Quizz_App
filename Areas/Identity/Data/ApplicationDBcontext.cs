@@ -23,11 +23,12 @@ namespace QuizzApp.Areas.Identity.Data
         }
 
         public DbSet<QuizzApp.Models.Quizz> Quizzes { get; set; } = default!;
-        public DbSet<QuizzApp.Models.Tema> Tema { get; set; } = default!;
-        public DbSet<QuizzApp.Models.Topico> Topico { get; set; } = default!;
+        public DbSet<QuizzApp.Models.Tema> Tema { get; set; }
+        public DbSet<QuizzApp.Models.Topico> Topico { get; set; }
+        public DbSet<QuizzApp.Models.Pergunta> Pergunta { get; set; }
     }
 
-    public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>
+        public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {

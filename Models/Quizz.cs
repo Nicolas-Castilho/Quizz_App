@@ -20,18 +20,8 @@ namespace QuizzApp.Models
         //Topicos
         public int topicoid { get; set; }
         public Topico? topico { get; set; }
-        public List<Pergunta> Perguntas { get; set; }
-    }
-
-    public class Pergunta
-    {
-        [Key] 
-        public int Id { get; set; }
-        [Required]
-        [StringLength(70)]
-        public string Texto { get; set; }
-        [Required]
-        public List<string> Respostas { get; set; }
+        //Perguntas
+        public ICollection<Pergunta> ?Perguntas { get; set; }
     }
 
 }

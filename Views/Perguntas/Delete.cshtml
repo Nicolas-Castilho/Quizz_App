@@ -1,0 +1,64 @@
+﻿@model QuizzApp.Models.Pergunta
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pergunta</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Texto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Texto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Resposta1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Resposta1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Resposta2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Resposta2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Resposta3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Resposta3)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Resposta4)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Resposta4)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RespostaCorreta)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RespostaCorreta)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.quizz)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.quizz.Descricao)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

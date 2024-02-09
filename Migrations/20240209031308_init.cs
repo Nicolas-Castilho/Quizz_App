@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace QuizzApp.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,17 +16,17 @@ namespace QuizzApp.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(20)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(100)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(100)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(100)", maxLength: 256, nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(30)", nullable: true),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -38,6 +38,18 @@ namespace QuizzApp.Migrations
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Tema",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nmtema = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tema", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
@@ -58,20 +70,6 @@ namespace QuizzApp.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-
-            migrationBuilder.CreateTable(
-                name: "Tema",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nmtema = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tema", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,17 +128,22 @@ namespace QuizzApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Texto = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
-                    Respostas = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    QuizzesId = table.Column<int>(type: "int", nullable: true)
+                    Resposta1 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Resposta2 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Resposta3 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Resposta4 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    RespostaCorreta = table.Column<int>(type: "int", nullable: false),
+                    quizzid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pergunta", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pergunta_Quizzes_QuizzesId",
-                        column: x => x.QuizzesId,
+                        name: "FK_Pergunta_Quizzes_quizzid",
+                        column: x => x.quizzid,
                         principalTable: "Quizzes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -161,9 +164,9 @@ namespace QuizzApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pergunta_QuizzesId",
+                name: "IX_Pergunta_quizzid",
                 table: "Pergunta",
-                column: "QuizzesId");
+                column: "quizzid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Quizzes_temaid",
@@ -185,10 +188,25 @@ namespace QuizzApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUserClaims");
 
             migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "Pergunta");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
