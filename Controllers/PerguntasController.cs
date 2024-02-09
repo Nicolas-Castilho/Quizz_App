@@ -58,7 +58,7 @@ namespace QuizzApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int quizzId,[Bind("Id,Texto,Resposta1,Resposta2,Resposta3,Resposta4,RespostaCorreta,quizzid")] Pergunta pergunta)
+        public async Task<IActionResult> Create([Bind("Id,Texto,Resposta1,Resposta2,Resposta3,Resposta4,RespostaCorreta,quizzid")] Pergunta pergunta, int quizzId)
         {
             if (ModelState.IsValid)
             {

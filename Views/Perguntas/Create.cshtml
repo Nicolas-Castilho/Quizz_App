@@ -43,6 +43,7 @@
                 <input asp-for="RespostaCorreta" class="form-control" />
                 <span asp-validation-for="RespostaCorreta" class="text-danger"></span>
             </div>
+            <input type="hidden" name="quizzId" value="@ViewBag.quizzId" />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
