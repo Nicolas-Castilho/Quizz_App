@@ -26,7 +26,7 @@ namespace QuizzApp.Models
 
         //Quizz
         public int quizzid { get; set; }
-        public Quizz quizz { get; set; }
+        public Quizz ?quizz { get; set; }
 
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using QuizzApp.Areas.Identity.Data;
 using QuizzApp.Models;
+using System.Security.Claims;
 
 namespace QuizzApp.Controllers
 {
@@ -23,7 +24,9 @@ namespace QuizzApp.Controllers
         // GET: Quizzes
         public async Task<IActionResult> Index()
         {
-            var applicationDBcontext = _context.Quizzes.Include(q => q.tema).Include(q => q.topico);
+            var applicationDBcontext = _context.Quizzes.Where(q => q.iduser == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                .Include(q => q.tema).
+                Include(q => q.topico);
             return View(await applicationDBcontext.ToListAsync());
         }
 

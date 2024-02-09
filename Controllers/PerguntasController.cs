@@ -46,8 +46,9 @@ namespace QuizzApp.Controllers
         }
 
         // GET: Perguntas/Create
-        public IActionResult Create()
+        public IActionResult Create(int quizzId)
         {
+            ViewBag.QuizId = quizzId;
             ViewData["quizzid"] = new SelectList(_context.Quizzes, "Id", "Descricao");
             return View();
         }
@@ -57,13 +58,14 @@ namespace QuizzApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Texto,Resposta1,Resposta2,Resposta3,Resposta4,RespostaCorreta,quizzid")] Pergunta pergunta)
+        public async Task<IActionResult> Create(int quizzId,[Bind("Id,Texto,Resposta1,Resposta2,Resposta3,Resposta4,RespostaCorreta,quizzid")] Pergunta pergunta)
         {
             if (ModelState.IsValid)
             {
+                pergunta.quizzid = quizzId;
                 _context.Add(pergunta);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { id = quizzId });
             }
             ViewData["quizzid"] = new SelectList(_context.Quizzes, "Id", "Descricao", pergunta.quizzid);
             return View(pergunta);
