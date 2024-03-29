@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wcqqem6bW/OL5GyFHc/jryGj/35SBLN1+yaLK70w/tEnyafy+CCeKowB6ok9yPaklYVB+Ake9Gt2oX3x2lSRPQ==",
+  "dgSpecHash": "Mr+E7n/lD3F5IohGaEe/l26MOBRdE3mrhKBsLLwSzNh26mvB23Bz7yVc5BQf05fEpPuZclXAhbsQJlpMgtCTCg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\valda\\source\\repos\\QuizzApp\\QuizzApp\\QuizzApp.csproj",
+  "projectFilePath": "C:\\Users\\valda\\source\\repos\\QuizzApp\\Quizz_App\\QuizzApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\valda\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\valda\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

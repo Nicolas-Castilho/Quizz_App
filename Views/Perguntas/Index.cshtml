@@ -8,7 +8,9 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <div>
+        <a asp-action="Create" asp-controller="Perguntas" asp-route-quizzId="@ViewBag.QuizzId">Criar Nova Pergunta</a>
+    </div>
 </p>
 <table class="table">
     <thead>
@@ -59,7 +61,7 @@
                 @Html.DisplayFor(modelItem => item.RespostaCorreta)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.quizz.Descricao)
+                @Html.DisplayFor(modelItem => item.quizz.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

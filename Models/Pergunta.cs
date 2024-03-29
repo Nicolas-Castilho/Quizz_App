@@ -23,10 +23,13 @@ namespace QuizzApp.Models
         public string Resposta4 { get; set; }
         [Required]
         public int RespostaCorreta { get; set; }
+        [StringLength(255)]
+        public string ImagemPath { get; set; }
+
 
         //Quizz
         public int quizzid { get; set; }
-        public Quizz ?quizz { get; set; }
+        public Quizz? quizz { get; set; }
 
     }
 }

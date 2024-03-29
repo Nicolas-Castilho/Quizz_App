@@ -133,7 +133,8 @@ namespace QuizzApp.Migrations
                     Resposta3 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Resposta4 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     RespostaCorreta = table.Column<int>(type: "int", nullable: false),
-                    quizzid = table.Column<int>(type: "int", nullable: false)
+                    quizzid = table.Column<int>(type: "int", nullable: false),
+                    ImagemPath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                 },
                 constraints: table =>
                 {

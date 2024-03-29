@@ -15,6 +15,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
+                <label asp-for="ImagemPath" class="control-label"></label>
+                <input asp-for="ImagemPath" class="form-control" />
+                <span asp-validation-for="ImagemPath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Texto" class="control-label"></label>
                 <input asp-for="Texto" class="form-control" />
                 <span asp-validation-for="Texto" class="text-danger"></span>
@@ -57,8 +62,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Perguntas" asp-route-quizzId="@Model.quizzid">Voltar</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -44,7 +44,12 @@
     </dl>
 </div>
 <div>
-    <a asp-controller="Perguntas" asp-action="Index">Perguntas</a>
+    <div>
+        <a asp-action="Index" asp-controller="Perguntas" asp-route-quizzId="@Model?.Id">Visualizar Perguntas</a>
+    </div>
+    <div>
+        <a asp-action="Create" asp-controller="Perguntas" asp-route-quizzId="@Model?.Id">Criar Nova Pergunta</a>
+    </div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

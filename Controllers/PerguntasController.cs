@@ -20,10 +20,17 @@ namespace QuizzApp.Controllers
         }
 
         // GET: Perguntas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? quizzId)
         {
-            var applicationDBcontext = _context.Pergunta.Include(p => p.quizz);
-            return View(await applicationDBcontext.ToListAsync());
+            if (quizzId == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.QuizzId = quizzId;
+
+            var perguntas = _context.Pergunta.Where(p => p.quizzid == quizzId);
+            return View(await perguntas.ToListAsync());
         }
 
         // GET: Perguntas/Details/5
@@ -46,10 +53,15 @@ namespace QuizzApp.Controllers
         }
 
         // GET: Perguntas/Create
-        public IActionResult Create()
+        public IActionResult Create(int? quizzid)
         {
+            if (quizzid == null)
+            {
+                return NotFound();
+            }
+            ViewBag.QuizzId = quizzid;
             ViewData["quizzid"] = new SelectList(_context.Quizzes, "Id", "Descricao");
-            return View();
+            return View(new Pergunta { quizzid = quizzid.Value });
         }
 
         // POST: Perguntas/Create
@@ -63,7 +75,7 @@ namespace QuizzApp.Controllers
             {
                 _context.Add(pergunta);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { quizzId = pergunta.quizzid });
             }
             ViewData["quizzid"] = new SelectList(_context.Quizzes, "Id", "Descricao", pergunta.quizzid);
             return View(pergunta);
@@ -116,7 +128,8 @@ namespace QuizzApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                // Redirecionar para o Index de Perguntas mantendo o quizzId
+                return RedirectToAction("Index", new { quizzId = pergunta.quizzid });
             }
             ViewData["quizzid"] = new SelectList(_context.Quizzes, "Id", "Descricao", pergunta.quizzid);
             return View(pergunta);
@@ -149,10 +162,14 @@ namespace QuizzApp.Controllers
             var pergunta = await _context.Pergunta.FindAsync(id);
             if (pergunta != null)
             {
+                int quizzId = pergunta.quizzid;
                 _context.Pergunta.Remove(pergunta);
+                await _context.SaveChangesAsync();
+
+                // Redirecionar para o Index de Perguntas mantendo o quizzId
+                return RedirectToAction("Index", new { quizzId });
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -8867,11 +8867,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\valda\\source\\repos\\QuizzApp\\QuizzApp\\QuizzApp.csproj",
+      "projectUniqueName": "C:\\Users\\valda\\source\\repos\\QuizzApp\\Quizz_App\\QuizzApp.csproj",
       "projectName": "QuizzApp",
-      "projectPath": "C:\\Users\\valda\\source\\repos\\QuizzApp\\QuizzApp\\QuizzApp.csproj",
+      "projectPath": "C:\\Users\\valda\\source\\repos\\QuizzApp\\Quizz_App\\QuizzApp.csproj",
       "packagesPath": "C:\\Users\\valda\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\valda\\source\\repos\\QuizzApp\\QuizzApp\\obj\\",
+      "outputPath": "C:\\Users\\valda\\source\\repos\\QuizzApp\\Quizz_App\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\valda\\AppData\\Roaming\\NuGet\\NuGet.Config",
